@@ -40,13 +40,14 @@ def find_nearest_neighbors(p, points, k=5):
 # my other way
 def nearest_neighbors2(p, points, k=5):
     distances = np.zeros(points.size) # uso points.size
-    i = 0
-    for p2 in points:
+    for i, p2 in enumerate(points):
         distances[i] = distance(p, p2)
-        i += 1
     ind = np.argsort(distances)
     return ind[:k]
 
+def knn_predict(p, points, outcomes, k=5):
+    ind = find_nearest_neighbors(p, points, k)
+    return majority_vote(outcomes[ind])
 
 # lets try the distance function
 p1 = np.array([1,1])
