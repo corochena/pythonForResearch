@@ -29,18 +29,21 @@ def majority_vote_short(votes):
     mode, count = ss.mstats.mode(votes)
     return mode
 
-def nearest_neighbors(p, points, k=5):
+def find_nearest_neighbors(p, points, k=5):
+    """Find the nearest neighbors of point p and return their indices"""
     distances = np.zeros(points.shape[0]) # se podria usar points.size
     for i in range(len(distances)):
-        distances.append(distance(p, points[i]))
+        distances[i] = distance(p, points[i])
     ind = np.argsort(distances)
     return ind[:k]
         
 # my other way
-def nearest_neighbors(p, points, k=5):
+def nearest_neighbors2(p, points, k=5):
     distances = np.zeros(points.size) # uso points.size
+    i = 0
     for p2 in points:
-        distances.append(distance(p, p2))
+        distances[i] = distance(p, p2)
+        i += 1
     ind = np.argsort(distances)
     return ind[:k]
 
@@ -53,4 +56,9 @@ distance(p1, p2)
 # lets try majority_vote
 votes = [1,2,3,1,2,3,1,2,3,3,3,3]
 vote_counts = majority_vote(votes)
+
+# lets try nearest_neighbors
+points = np.array([[1,1],[1,2],[1,3],[2,1],[2,2],[2,3],[3,1],[3,2],[3,3]])
+ind = find_nearest_neighbors(p, points, 2)
+print(points[ind])
 
